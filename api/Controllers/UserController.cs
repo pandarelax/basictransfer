@@ -45,7 +45,7 @@ public class UserController : ControllerBase
 
     [HttpDelete]
     [Route("{id}")]
-    // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public async ValueTask<IActionResult> Delete([FromRoute] Guid id)
     {
         var result = await _userService.Delete(id);
