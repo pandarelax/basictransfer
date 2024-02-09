@@ -10,7 +10,7 @@ export const PATH_DASHBOARD = {
   dashboard: '/dashboard',
   usersManagement: '/dashboard/users',
   departmentsManagement: '/dashboard/departments',
-  updateRole: '/dashboard/update-role/:userName',
+  updateRole: '/dashboard/update-role/:id',
   admin: '/dashboard/admin',
   user: '/dashboard/user',
 };

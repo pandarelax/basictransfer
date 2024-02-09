@@ -9,11 +9,16 @@ import { IAuthUser, IUpdateRoleDto } from '../../types/auth.types';
 import axiosInstance from '../../utils/axiosInstance';
 import { UPDATE_ROLE_URL, USERS_LIST_URL } from '../../utils/globalConfig';
 
+interface IGetUser {
+  data: IAuthUser;
+}
+
 const UpdateRolePage = () => {
   const { user: loggedInUser } = useAuth();
-  const { userName } = useParams();
+  const { id } = useParams();
   const [user, setUser] = useState<IAuthUser>();
   const [role, setRole] = useState<string>();
+  const [userName, setUserName] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const [postLoading, setPostLoading] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -21,12 +26,13 @@ const UpdateRolePage = () => {
   const getUserByUserName = async () => {
     try {
       setLoading(true);
-      const response = await axiosInstance.get<IAuthUser>(`${USERS_LIST_URL}/${userName}`);
-      const { data } = response;
+      const response = await axiosInstance.get<IGetUser>(`${USERS_LIST_URL}/${id}`);
+      const data = response.data.data;
+      setUserName(data.userName);
       if (!isAuthorizedForUpdateRole(loggedInUser!.roles[0], data.roles[0])) {
         setLoading(false);
         toast.error('You are not allowed to change role of this user');
-        navigate('/dashboard/users-management');
+        navigate('/dashboard/users');
       } else {
         setUser(data);
         setRole(data?.roles[0]);
@@ -41,7 +47,7 @@ const UpdateRolePage = () => {
       } else {
         toast.error('An Error occured. Please contact admins');
       }
-      navigate('/dashboard/users-management');
+      navigate('/dashboard/users');
     }
   };
 

@@ -1,9 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { IAuthUser, RolesEnum } from '../../../types/auth.types';
-import Button from '../../general/Button';
-import moment from 'moment';
 import { isAuthorizedForUpdateRole } from '../../../auth/auth.utils';
 import useAuth from '../../../hooks/useAuth.hook';
+import { IAuthUser, RolesEnum } from '../../../types/auth.types';
+import Button from '../../general/Button';
 
 interface IProps {
   usersList: IAuthUser[];
@@ -15,12 +14,8 @@ const UsersTableSection = ({ usersList }: IProps) => {
 
   const RoleClassNameCreator = (Roles: string[]) => {
     let className = 'px-3 py-1 text-white rounded-3xl ';
-    if (Roles.includes(RolesEnum.OWNER)) {
-      className += 'bg-[#3b3549]';
-    } else if (Roles.includes(RolesEnum.ADMIN)) {
+     if (Roles.includes(RolesEnum.ADMIN)) {
       className += 'bg-[#9333EA]';
-    } else if (Roles.includes(RolesEnum.MANAGER)) {
-      className += 'bg-[#0B96BC]';
     } else if (Roles.includes(RolesEnum.USER)) {
       className += 'bg-[#FEC223]';
     }
@@ -35,7 +30,6 @@ const UsersTableSection = ({ usersList }: IProps) => {
         <div>User Name</div>
         <div>First Name</div>
         <div>Last Name</div>
-        <div>Creation Time</div>
         <div className='flex justify-center'>Roles</div>
         <div>Operations</div>
       </div>
@@ -48,14 +42,13 @@ const UsersTableSection = ({ usersList }: IProps) => {
           <div className='flex items-center font-semibold'>{user.userName}</div>
           <div className='flex items-center'>{user.firstName}</div>
           <div className='flex items-center'>{user.lastName}</div>
-          <div className='flex items-center'>{moment(user.createdAt).format('YYYY-MM-DD|HH:mm')}</div>
           <div className='flex justify-center items-center'>
             <span className={RoleClassNameCreator(user.roles)}>{user.roles}</span>
           </div>
           <div className='flex items-center'>
             <Button
               label='Update Role'
-              onClick={() => navigate(`/dashboard/update-role/${user.userName}`)}
+              onClick={() => navigate(`/dashboard/update-role/${user.id}`)}
               type='button'
               variant='primary'
               disabled={!isAuthorizedForUpdateRole(loggedInUser!.roles[0], user.roles[0])}

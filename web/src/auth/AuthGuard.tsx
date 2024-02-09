@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import useAuth from '../hooks/useAuth.hook';
 import AuthSpinner from '../components/general/AuthSpinner';
+import useAuth from '../hooks/useAuth.hook';
 import { PATH_PUBLIC } from '../routes/paths';
 
 // We need an interface for our props.
