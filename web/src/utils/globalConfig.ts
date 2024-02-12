@@ -7,6 +7,7 @@ export const LOGIN_URL = '/Auth/login';
 export const ME_URL = '/Auth/me';
 export const USERS_LIST_URL = '/User';
 export const UPDATE_ROLE_URL = '/Auth/assign-role';
+export const UPDATE_DEPARTMENT_URL = '/Department';
 export const USERNAMES_LIST_URL = '/Auth/usernames';
 export const DEPARTMENTS_LIST_URL = '/Department';
 
