@@ -16,7 +16,6 @@ export interface IUpdateRoleDto {
 }
 
 export interface IUpdateDepartmentDto {
-  id: string | undefined;
   name: string | undefined;
 }
 
