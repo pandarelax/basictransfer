@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import LatestUsersSection from '../../components/dashboard/users-management/LatestUsersSection';
 import UserCountSection from '../../components/dashboard/users-management/UserCountSection';
 import UsersTableSection from '../../components/dashboard/users-management/UsersTableSection';
 import Spinner from '../../components/general/Spinner';
@@ -41,9 +40,6 @@ const UsersManagementPage = () => {
     <div className='pageTemplate2'>
       <h1 className='text-2xl font-bold'>Users Management</h1>
       <UserCountSection usersList={users} />
-      <div className='grid grid-cols-1 lg:grid-cols-4 gap-x-4'>
-        <LatestUsersSection usersList={users} />
-      </div>
       <UsersTableSection usersList={users} />
     </div>
   );

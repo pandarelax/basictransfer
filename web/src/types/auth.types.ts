@@ -15,6 +15,11 @@ export interface IUpdateRoleDto {
   newRole: string;
 }
 
+export interface IUpdateDepartmentDto {
+  id: string;
+  name: string;
+}
+
 export interface IAuthUser {
   id: string;
   firstName: string;

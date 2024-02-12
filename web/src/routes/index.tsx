@@ -6,6 +6,8 @@ import AdminPage from '../pages/dashboard/AdminPage';
 import DashboardPage from '../pages/dashboard/DashboardPage';
 // import ManagerPage from '../pages/dashboard/ManagerPage';
 // import OwnerPage from '../pages/dashboard/OwnerPage';
+import DepartmentsManagementPage from '../pages/dashboard/DepartmentsManagementPage';
+import UpdateDepartmentPage from '../pages/dashboard/UpdateDepartmentPage';
 import UpdateRolePage from '../pages/dashboard/UpdateRolePage';
 import UserPage from '../pages/dashboard/UserPage';
 import UsersManagementPage from '../pages/dashboard/UsersManagementPage';
@@ -33,17 +35,13 @@ const GlobalRouter = () => {
           <Route path={PATH_DASHBOARD.dashboard} element={<DashboardPage />} />
           <Route path={PATH_DASHBOARD.user} element={<UserPage />} />
         </Route>
-        {/* <Route element={<AuthGuard roles={managerAccessRoles} />}>
-          <Route path={PATH_DASHBOARD.manager} element={<ManagerPage />} />
-        </Route> */}
         <Route element={<AuthGuard roles={adminAccessRoles} />}>
           <Route path={PATH_DASHBOARD.usersManagement} element={<UsersManagementPage />} />
+          <Route path={PATH_DASHBOARD.departmentsManagement} element={<DepartmentsManagementPage />} />
           <Route path={PATH_DASHBOARD.updateRole} element={<UpdateRolePage />} />
+          <Route path={PATH_DASHBOARD.updateDepartment} element={<UpdateDepartmentPage />} />
           <Route path={PATH_DASHBOARD.admin} element={<AdminPage />} />
         </Route>
-        {/* <Route element={<AuthGuard roles={ownerAccessRoles} />}>
-          <Route path={PATH_DASHBOARD.owner} element={<OwnerPage />} />
-        </Route> */}
         {/* Protected routes -------------------------------------------------- */}
 
         {/* Catch all (404) */}

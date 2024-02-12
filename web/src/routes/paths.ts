@@ -11,6 +11,7 @@ export const PATH_DASHBOARD = {
   usersManagement: '/dashboard/users',
   departmentsManagement: '/dashboard/departments',
   updateRole: '/dashboard/update-role/:id',
+  updateDepartment: '/dashboard/update-department/:id',
   admin: '/dashboard/admin',
   user: '/dashboard/user',
 };
