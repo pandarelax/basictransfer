@@ -64,7 +64,6 @@ const TransferUserPage = () => {
     }
   }
 
-
   const Update = async () => {
     try {
       if (!department || !userName) return;
