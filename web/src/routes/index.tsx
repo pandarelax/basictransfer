@@ -6,6 +6,7 @@ import AdminPage from '../pages/dashboard/AdminPage';
 import CreateDepartmentPage from '../pages/dashboard/CreateDepartmentPage';
 import DashboardPage from '../pages/dashboard/DashboardPage';
 import DepartmentsManagementPage from '../pages/dashboard/DepartmentsManagementPage';
+import TransferUserPage from '../pages/dashboard/TransferUserPage';
 import UpdateDepartmentPage from '../pages/dashboard/UpdateDepartmentPage';
 import UpdateRolePage from '../pages/dashboard/UpdateRolePage';
 import UserPage from '../pages/dashboard/UserPage';
@@ -38,6 +39,7 @@ const GlobalRouter = () => {
           <Route path={PATH_DASHBOARD.usersManagement} element={<UsersManagementPage />} />
           <Route path={PATH_DASHBOARD.departmentsManagement} element={<DepartmentsManagementPage />} />
           <Route path={PATH_DASHBOARD.updateRole} element={<UpdateRolePage />} />
+          <Route path={PATH_DASHBOARD.transferUser} element={<TransferUserPage />} />
           <Route path={PATH_DASHBOARD.updateDepartment} element={<UpdateDepartmentPage />} />
           <Route path={PATH_DASHBOARD.createDepartment} element={<CreateDepartmentPage />} />
           <Route path={PATH_DASHBOARD.admin} element={<AdminPage />} />

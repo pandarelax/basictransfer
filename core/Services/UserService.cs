@@ -257,8 +257,6 @@ public class UserService : IUserService
 
         try
         {
-
-
             var existingUser = await _userManager.FindByIdAsync(user.Id);
 
             if (existingUser is null)

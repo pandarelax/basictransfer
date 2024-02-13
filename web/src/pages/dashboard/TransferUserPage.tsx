@@ -1,23 +1,23 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
-import { allowedRolesForUpdateArray, isAuthorizedForUpdateRole } from '../../auth/auth.utils';
+import { allowedRolesForUpdateArray, isAuthorizedForUpdateDepartment } from '../../auth/auth.utils';
 import Button from '../../components/general/Button';
 import Spinner from '../../components/general/Spinner';
 import useAuth from '../../hooks/useAuth.hook';
-import { IAuthUser, IUpdateRoleDto } from '../../types/auth.types';
+import { IAuthUser, IUpdateDepartmentDto } from '../../types/auth.types';
 import axiosInstance from '../../utils/axiosInstance';
-import { UPDATE_ROLE_URL, USERS_LIST_URL } from '../../utils/globalConfig';
+import { USERS_LIST_URL } from '../../utils/globalConfig';
 
 interface IGetUser {
   data: IAuthUser;
 }
 
-const UpdateRolePage = () => {
+const TransferUserPage = () => {
   const { user: loggedInUser } = useAuth();
   const { id } = useParams();
   const [user, setUser] = useState<IAuthUser>();
-  const [role, setRole] = useState<string>();
+  const [department, setDepartment] = useState<string>();
   const [userName, setUserName] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const [postLoading, setPostLoading] = useState<boolean>(false);
@@ -29,13 +29,13 @@ const UpdateRolePage = () => {
       const response = await axiosInstance.get<IGetUser>(`${USERS_LIST_URL}/${id}`);
       const data = response.data.data;
       setUserName(data.userName);
-      if (!isAuthorizedForUpdateRole(loggedInUser!.roles[0], data.roles[0])) {
+      if (!isAuthorizedForUpdateDepartment(loggedInUser!.roles)) {
         setLoading(false);
-        toast.error('You are not allowed to change role of this user');
+        toast.error('You are not allowed to transfer this user');
         navigate('/dashboard/users');
       } else {
         setUser(data);
-        setRole(data?.roles[0]);
+        setDepartment(data?.roles[0]);
         setLoading(false);
       }
     } catch (error) {
@@ -54,13 +54,13 @@ const UpdateRolePage = () => {
 
   const Update = async () => {
     try {
-      if (!role || !userName) return;
+      if (!department || !userName) return;
       setPostLoading(true);
-      const updateData: IUpdateRoleDto = {
-        newRole: role,
-        userName,
+      const updateData: IUpdateDepartmentDto = {
+        userId: id,
+        departmentName: department,
       };
-      await axiosInstance.post(UPDATE_ROLE_URL, updateData);
+      await axiosInstance.put(USERS_LIST_URL, updateData);
       setPostLoading(false);
       toast.success('Role updated Successfully.');
       navigate('/dashboard/users');
@@ -99,15 +99,11 @@ const UpdateRolePage = () => {
             UserName:
             <span className='text-2xl font-bold ml-2 px-2 py-1 text-purple-600 rounded-md'>{userName}</span>
           </h4>
-          <h4 className='text-xl'>
-            Current Role:
-            <span className='text-2xl font-bold ml-2 px-2 py-1 text-purple-600 rounded-md'>{user?.roles[0]}</span>
-          </h4>
         </div>
 
-        <h4 className='text-xl font-bold'>New Role:</h4>
+        <h4 className='text-xl font-bold'>New Department:</h4>
 
-        <select value={role} className='w-80' onChange={(e) => setRole(e.target.value)}>
+        <select value={department} className='w-80' onChange={(e) => setDepartment(e.target.value)}>
           {allowedRolesForUpdateArray(loggedInUser).map((item) => (
             <option key={item} value={item}>
               {item}
@@ -122,11 +118,11 @@ const UpdateRolePage = () => {
             type='button'
             variant='secondary'
           />
-          <Button label='Update' onClick={() => Update()} type='button' variant='primary' loading={postLoading} />
+          <Button label='Transfer' onClick={() => Update()} type='button' variant='primary' loading={postLoading} />
         </div>
       </div>
     </div>
   );
 };
 
-export default UpdateRolePage;
+export default TransferUserPage;
