@@ -1,9 +1,9 @@
 import { FaUserShield } from 'react-icons/fa';
-import { IAuthUser } from '../../../types/auth.types';
+import { IDepartment } from '../../../types/department.types';
 import DepartmentCountCard from './DepartmentCountCard';
 
 interface IProps {
-  departmentsList: IAuthUser[];
+  departmentsList: IDepartment[];
 }
 
 const DepartmentCountSection = ({ departmentsList }: IProps) => {

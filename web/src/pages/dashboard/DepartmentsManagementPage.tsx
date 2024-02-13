@@ -3,12 +3,13 @@ import { toast } from 'react-hot-toast';
 import DepartmentCountSection from '../../components/dashboard/departments-management/DepartmentCountSection';
 import DepartmentsTableSection from '../../components/dashboard/departments-management/DepartmentsTableSection';
 import Spinner from '../../components/general/Spinner';
-import { IAuthUser, IServiceResponse } from '../../types/auth.types';
+import { IServiceResponse } from '../../types/auth.types';
+import { IDepartment } from '../../types/department.types';
 import axiosInstance from '../../utils/axiosInstance';
 import { DEPARTMENTS_LIST_URL } from '../../utils/globalConfig';
 
 const DepartmentsManagementPage = () => {
-  const [users, setUsers] = useState<IAuthUser[]>([]);
+  const [departments, setDepartments] = useState<IDepartment[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const getUsersList = async () => {
@@ -16,7 +17,7 @@ const DepartmentsManagementPage = () => {
       setLoading(true);
       const response = await axiosInstance.get<IServiceResponse>(DEPARTMENTS_LIST_URL);
       const { data } = response.data;
-      setUsers(data);
+      setDepartments(data);
       setLoading(false);
     } catch (error) {
       toast.error('An Error happened. Please Contact admins');
@@ -39,8 +40,8 @@ const DepartmentsManagementPage = () => {
   return (
     <div className='pageTemplate2'>
       <h1 className='text-2xl font-bold'>Departments Management</h1>
-      <DepartmentCountSection departmentsList={users} />
-      <DepartmentsTableSection departmentsList={users} />
+      <DepartmentCountSection departmentsList={departments} />
+      <DepartmentsTableSection departmentsList={departments} />
     </div>
   );
 };

@@ -45,6 +45,6 @@ export const isAuthorizedForUpdateRole = (loggedInUserRole: string, selectedUser
   return result;
 };
 
-export const isAuthorizedForUpdateDepartment = (loggedInUserRoles: string[]) => {
-  return loggedInUserRoles.includes(RolesEnum.ADMIN);
+export const isAuthorizedForUpdateDepartment = (loggedInUserRoles?: string[]) => {
+  return loggedInUserRoles?.includes(RolesEnum.ADMIN);
 };

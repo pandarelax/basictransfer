@@ -1,16 +1,15 @@
 import { useNavigate } from 'react-router-dom';
-import { isAuthorizedForUpdateRole } from '../../../auth/auth.utils';
+import { isAuthorizedForUpdateDepartment } from '../../../auth/auth.utils';
 import useAuth from '../../../hooks/useAuth.hook';
-import { IAuthUser } from '../../../types/auth.types';
+import { IDepartment } from '../../../types/department.types';
 import Button from '../../general/Button';
 
 interface IProps {
-  departmentsList: IAuthUser[];
+  departmentsList: IDepartment[];
 }
 
 const DepartmentsTableSection = ({ departmentsList }: IProps) => {
     // TODO: Fetch departments from the server
-  const department = departmentsList[0];
   const { user: loggedInUser } = useAuth();
   const navigate = useNavigate();
 
@@ -23,21 +22,21 @@ const DepartmentsTableSection = ({ departmentsList }: IProps) => {
         <div>Users Count</div>
         <div>Operations</div>
       </div>
-      {departmentsList.map((user, index) => (
+      {departmentsList.map((department, index) => (
         <div
           key={index}
           className='grid grid-cols-7 px-2 h-12 my-1 border border-gray-200 hover:bg-gray-200 rounded-md'
         >
           <div className='flex items-center'>{index + 1}</div>
-          <div className='flex items-center font-semibold'>{user.userName}</div>
-          <div className='flex items-center'>{user.lastName}</div>
+          <div className='flex items-center font-semibold'>{department.name}</div>
+          <div className='flex items-center'>-</div>
           <div className='flex items-center'>
             <Button
-              label='Update Role'
+              label='Update'
               onClick={() => navigate(`/dashboard/update-department/${department.id}`)}
               type='button'
               variant='primary'
-              disabled={!isAuthorizedForUpdateRole(loggedInUser!.roles[0], user.roles[0])}
+              disabled={!isAuthorizedForUpdateDepartment(loggedInUser?.roles)}
             />
           </div>
         </div>
