@@ -33,6 +33,7 @@ export interface IAuthUser {
   userName: string;
   email: string;
   roles: string[];
+  department?: string
 }
 
 export interface IServiceResponse {

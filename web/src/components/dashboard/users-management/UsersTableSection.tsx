@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { isAuthorizedForUpdateRole } from '../../../auth/auth.utils';
+import { isAuthorizedForUpdateDepartment, isAuthorizedForUpdateRole } from '../../../auth/auth.utils';
 import useAuth from '../../../hooks/useAuth.hook';
 import { IAuthUser, RolesEnum } from '../../../types/auth.types';
 import Button from '../../general/Button';
@@ -52,6 +52,15 @@ const UsersTableSection = ({ usersList }: IProps) => {
               type='button'
               variant='primary'
               disabled={!isAuthorizedForUpdateRole(loggedInUser!.roles[0], user.roles[0])}
+            />
+          </div>
+          <div className='flex items-center'>
+            <Button
+              label='Transfer'
+              onClick={() => navigate(`/dashboard/transfer-user/${user.id}`)}
+              type='button'
+              variant='primary'
+              disabled={!isAuthorizedForUpdateDepartment(loggedInUser!.roles)}
             />
           </div>
         </div>

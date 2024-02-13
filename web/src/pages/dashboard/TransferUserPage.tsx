@@ -29,13 +29,14 @@ const TransferUserPage = () => {
       const response = await axiosInstance.get<IGetUser>(`${USERS_LIST_URL}/${id}`);
       const data = response.data.data;
       setUserName(data.userName);
+      setDepartment(data.department)
       if (!isAuthorizedForUpdateDepartment(loggedInUser!.roles)) {
         setLoading(false);
         toast.error('You are not allowed to transfer this user');
         navigate('/dashboard/users');
       } else {
         setUser(data);
-        setDepartment(data?.roles[0]);
+        setDepartment(data?.department);
         setLoading(false);
       }
     } catch (error) {
@@ -92,12 +93,18 @@ const TransferUserPage = () => {
   return (
     <div className='p-4 w-2/4 mx-auto flex flex-col gap-4'>
       <div className='bg-white p-2 rounded-md flex flex-col gap-4'>
-        <h1 className='text-2xl font-bold'>Update Role</h1>
+        <h1 className='text-2xl font-bold'>Transfer User</h1>
 
         <div className='border border-dashed border-purple-300 rounded-md'>
           <h4 className='text-xl'>
             UserName:
             <span className='text-2xl font-bold ml-2 px-2 py-1 text-purple-600 rounded-md'>{userName}</span>
+          </h4>
+        </div>
+        <div className='border border-dashed border-purple-300 rounded-md'>
+          <h4 className='text-xl'>
+            Department:
+            <span className='text-2xl font-bold ml-2 px-2 py-1 text-purple-600 rounded-md'>{department}</span>
           </h4>
         </div>
 
