@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
-import { allowedRolesForUpdateArray, isAuthorizedForUpdateDepartment } from '../../auth/auth.utils';
+import { isAuthorizedForUpdateDepartment } from '../../auth/auth.utils';
 import Button from '../../components/general/Button';
 import Spinner from '../../components/general/Spinner';
 import useAuth from '../../hooks/useAuth.hook';
 import { IAuthUser, IUpdateDepartmentDto } from '../../types/auth.types';
+import { IDepartment } from '../../types/department.types';
 import axiosInstance from '../../utils/axiosInstance';
-import { USERS_LIST_URL } from '../../utils/globalConfig';
+import { DEPARTMENTS_LIST_URL, USERS_LIST_URL } from '../../utils/globalConfig';
 
 interface IGetUser {
   data: IAuthUser;
@@ -18,6 +19,7 @@ const TransferUserPage = () => {
   const { id } = useParams();
   const [user, setUser] = useState<IAuthUser>();
   const [department, setDepartment] = useState<string>();
+  const [departmentList, setDepartmentList] = useState<IDepartment[]>();
   const [userName, setUserName] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const [postLoading, setPostLoading] = useState<boolean>(false);
@@ -52,6 +54,16 @@ const TransferUserPage = () => {
     }
   };
 
+  const getDepartments = async () => {
+    try {
+      const response = await axiosInstance.get(DEPARTMENTS_LIST_URL);
+      const data = response.data.data;
+      setDepartmentList(data);
+    } catch (error) {
+      toast.error('An Error occured. Please contact admins');
+    }
+  }
+
 
   const Update = async () => {
     try {
@@ -80,6 +92,7 @@ const TransferUserPage = () => {
 
   useEffect(() => {
     getUserById();
+    getDepartments();
   }, []);
 
   if (loading) {
@@ -111,9 +124,9 @@ const TransferUserPage = () => {
         <h4 className='text-xl font-bold'>New Department:</h4>
 
         <select value={department} className='w-80' onChange={(e) => setDepartment(e.target.value)}>
-          {allowedRolesForUpdateArray(loggedInUser).map((item) => (
-            <option key={item} value={item}>
-              {item}
+          {departmentList?.map((item) => (
+            <option key={item.id} value={item.name}>
+              {item.name}
             </option>
           ))}
         </select>
