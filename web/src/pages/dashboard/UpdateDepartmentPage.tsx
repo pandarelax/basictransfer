@@ -77,7 +77,7 @@ const UpdateDepartmentPage = () => {
       const updateData: IUpdateDepartmentDto = {
         name: formData.departmentName,
       };
-      await axiosInstance.post(`${UPDATE_DEPARTMENT_URL}/${id}`, updateData);
+      await axiosInstance.put(`${UPDATE_DEPARTMENT_URL}/${id}`, updateData);
       setPostLoading(false);
       toast.success('Department updated Successfully.');
       navigate('/dashboard/departments-management');
@@ -90,7 +90,7 @@ const UpdateDepartmentPage = () => {
       } else {
         toast.error('An Error occurred. Please contact admins');
       }
-      navigate('/dashboard/users-management');
+      navigate('/dashboard/departments-management');
     }
   };
 

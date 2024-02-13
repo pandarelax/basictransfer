@@ -6,6 +6,7 @@ import AdminPage from '../pages/dashboard/AdminPage';
 import DashboardPage from '../pages/dashboard/DashboardPage';
 // import ManagerPage from '../pages/dashboard/ManagerPage';
 // import OwnerPage from '../pages/dashboard/OwnerPage';
+import CreateDepartmentPage from '../pages/dashboard/CreateDepartmentPage';
 import DepartmentsManagementPage from '../pages/dashboard/DepartmentsManagementPage';
 import UpdateDepartmentPage from '../pages/dashboard/UpdateDepartmentPage';
 import UpdateRolePage from '../pages/dashboard/UpdateRolePage';
@@ -40,6 +41,7 @@ const GlobalRouter = () => {
           <Route path={PATH_DASHBOARD.departmentsManagement} element={<DepartmentsManagementPage />} />
           <Route path={PATH_DASHBOARD.updateRole} element={<UpdateRolePage />} />
           <Route path={PATH_DASHBOARD.updateDepartment} element={<UpdateDepartmentPage />} />
+          <Route path={PATH_DASHBOARD.createDepartment} element={<CreateDepartmentPage />} />
           <Route path={PATH_DASHBOARD.admin} element={<AdminPage />} />
         </Route>
         {/* Protected routes -------------------------------------------------- */}
