@@ -3,15 +3,26 @@ import { isAuthorizedForUpdateDepartment } from '../../../auth/auth.utils';
 import useAuth from '../../../hooks/useAuth.hook';
 import { IDepartment } from '../../../types/department.types';
 import Button from '../../general/Button';
+import Spinner from '../../general/Spinner';
 
 interface IProps {
   departmentsList: IDepartment[];
+  deleteDepartment: (id: string) => void;
+  loading: boolean;
 }
 
-const DepartmentsTableSection = ({ departmentsList }: IProps) => {
+const DepartmentsTableSection = ({ departmentsList, deleteDepartment, loading }: IProps) => {
     // TODO: Fetch departments from the server
   const { user: loggedInUser } = useAuth();
   const navigate = useNavigate();
+
+  if (loading) {
+    return (
+      <div className='w-full'>
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <div className='bg-white p-2 rounded-md'>
@@ -36,6 +47,13 @@ const DepartmentsTableSection = ({ departmentsList }: IProps) => {
               onClick={() => navigate(`/dashboard/update-department/${department.id}`)}
               type='button'
               variant='primary'
+              disabled={!isAuthorizedForUpdateDepartment(loggedInUser?.roles)}
+            />
+            <Button
+              label='Delete'
+              onClick={() => deleteDepartment(department.id)}
+              type='button'
+              variant='danger'
               disabled={!isAuthorizedForUpdateDepartment(loggedInUser?.roles)}
             />
           </div>

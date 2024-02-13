@@ -12,7 +12,7 @@ const DepartmentsManagementPage = () => {
   const [departments, setDepartments] = useState<IDepartment[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const getUsersList = async () => {
+  const getDepartmentsList = async () => {
     try {
       setLoading(true);
       const response = await axiosInstance.get<IServiceResponse>(DEPARTMENTS_LIST_URL);
@@ -25,9 +25,29 @@ const DepartmentsManagementPage = () => {
     }
   };
 
+  const deleteDepartment = async (id: string) => {
+    try {
+      setLoading(true);
+      const response = await axiosInstance.delete<IServiceResponse>(`${DEPARTMENTS_LIST_URL}/${id}`);
+      const { success, message } = response.data;
+
+      if (!success) {
+        return toast.error(message);
+      }
+
+      toast.success(message);
+      setDepartments(departments.filter((department) => department.id !== id));
+    } catch (error) {
+      toast.error('An Error happened. Please Contact admins');
+      console.log(error)
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    getUsersList();
-  }, []);
+    getDepartmentsList();
+  }, [departments.length]);
 
   if (loading) {
     return (
@@ -41,7 +61,7 @@ const DepartmentsManagementPage = () => {
     <div className='pageTemplate2'>
       <h1 className='text-2xl font-bold'>Departments Management</h1>
       <DepartmentCountSection departmentsList={departments} />
-      <DepartmentsTableSection departmentsList={departments} />
+      <DepartmentsTableSection deleteDepartment={deleteDepartment} departmentsList={departments} loading={loading} />
     </div>
   );
 };
