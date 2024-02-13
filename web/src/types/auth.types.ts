@@ -20,7 +20,7 @@ export interface IUpdateDepartmentDto {
 }
 
 export interface IAuthUser {
-  id: string;
+  id?: string;
   firstName: string;
   lastName: string;
   userName: string;

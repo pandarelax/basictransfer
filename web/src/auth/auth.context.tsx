@@ -11,11 +11,10 @@ import {
 import axiosInstance from '../utils/axiosInstance';
 import {
   LOGIN_URL,
-  ME_URL,
   PATH_AFTER_LOGIN,
   PATH_AFTER_LOGOUT,
   PATH_AFTER_REGISTER,
-  REGISTER_URL,
+  REGISTER_URL
 } from '../utils/globalConfig';
 import { getSession, setSession } from './auth.utils';
 
@@ -63,15 +62,13 @@ const AuthContextProvider = ({ children }: IProps) => {
   // Initialize Method
   const initializeAuthContext = useCallback(async () => {
     try {
-      const token = getSession();
+      const { token, userInfo } = getSession();
       if (token) {
-        // validate accessToken by calling backend
-        const response = await axiosInstance.post<ILoginResponseDto>(ME_URL, {
-          token,
-        });
-        // In response, we receive jwt token and user data
-        const { newToken, userInfo } = response.data;
-        setSession(newToken);
+        if (userInfo) {
+          setSession(token, userInfo);
+        } else {
+          setSession(token);
+        }
         dispatch({
           type: IAuthContextActionTypes.LOGIN,
           payload: userInfo,
@@ -123,7 +120,7 @@ const AuthContextProvider = ({ children }: IProps) => {
     toast.success('Login Was Successful');
     // In response, we receive jwt token and user data
     const { newToken, userInfo } = response.data;
-    setSession(newToken);
+    setSession(newToken, userInfo);
     dispatch({
       type: IAuthContextActionTypes.LOGIN,
       payload: userInfo,

@@ -1,18 +1,27 @@
 import { IAuthUser, RolesEnum } from '../types/auth.types';
 import axiosInstance from '../utils/axiosInstance';
 
-export const setSession = (accessToken: string | null) => {
+export const setSession = (accessToken: string | null, userInfo?: IAuthUser) => {
   if (accessToken) {
     localStorage.setItem('accessToken', accessToken);
     axiosInstance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    // Save user info to local storage for page refresh
+    if (userInfo) {
+      const userInfoString = JSON.stringify(userInfo);
+      localStorage.setItem('userInfo', userInfoString);
+    }
   } else {
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('userInfo');
     delete axiosInstance.defaults.headers.common.Authorization;
   }
 };
 
 export const getSession = () => {
-  return localStorage.getItem('accessToken');
+  const token = localStorage.getItem('accessToken');
+  const userInfoString = localStorage.getItem('userInfo');
+  const userInfo: IAuthUser = userInfoString ? JSON.parse(userInfoString) : undefined;
+  return { token, userInfo };
 };
 
 export const allAccessRoles = [ RolesEnum.ADMIN, RolesEnum.USER];
