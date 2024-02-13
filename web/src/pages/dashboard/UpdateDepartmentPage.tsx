@@ -80,7 +80,7 @@ const UpdateDepartmentPage = () => {
       await axiosInstance.put(`${UPDATE_DEPARTMENT_URL}/${id}`, updateData);
       setPostLoading(false);
       toast.success('Department updated Successfully.');
-      navigate('/dashboard/departments-management');
+      navigate('/dashboard/departments');
     } catch (error) {
       setPostLoading(false);
       const err = error as { data: string; status: number };
@@ -90,7 +90,7 @@ const UpdateDepartmentPage = () => {
       } else {
         toast.error('An Error occurred. Please contact admins');
       }
-      navigate('/dashboard/departments-management');
+      navigate('/dashboard/departments');
     }
   };
 
@@ -130,7 +130,7 @@ const UpdateDepartmentPage = () => {
           <div className='grid grid-cols-2 gap-4 mt-12'>
             <Button
               label='Cancel'
-              onClick={() => navigate('/dashboard/departments-management')}
+              onClick={() => navigate('/dashboard/departments')}
               type='button'
               variant='secondary'
               />
